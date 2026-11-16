@@ -128,6 +128,21 @@ export const XCircle = createIcon(
   </>
 );
 
+export const Menu = createIcon(
+  <>
+    <line x1="3" y1="12" x2="21" y2="12" />
+    <line x1="3" y1="6" x2="21" y2="6" />
+    <line x1="3" y1="18" x2="21" y2="18" />
+  </>
+);
+
+export const X = createIcon(
+  <>
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </>
+);
+
 export const AlertTriangle = createIcon(
   <>
     <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />

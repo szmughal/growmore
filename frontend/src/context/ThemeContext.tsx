@@ -185,6 +185,8 @@ interface AppContextType {
   indices: Record<MarketRegion, LiveIndexData>;
   liveTrades: ExecutedTrade[];
   sentimentScore: number;
+  isMobileMenuOpen: boolean;
+  setIsMobileMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -200,6 +202,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [indices, setIndices] = useState<Record<MarketRegion, LiveIndexData>>(INITIAL_INDICES);
   const [liveTrades, setLiveTrades] = useState<ExecutedTrade[]>(INITIAL_TRADES);
   const [sentimentScore, setSentimentScore] = useState<number>(68);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     document.documentElement.classList.remove('dark');
@@ -362,6 +365,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         indices,
         liveTrades,
         sentimentScore,
+        isMobileMenuOpen,
+        setIsMobileMenuOpen,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import MarketOverviewCards from '@/components/MarketOverviewCards';
 import InteractiveMarketChart from '@/components/InteractiveMarketChart';
 import FearGreedGauge from '@/components/FearGreedGauge';
 import MarketDataTable from '@/components/MarketDataTable';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import { Calendar, Building2, ArrowRight, ShieldCheck, Layers, Activity } from '@/components/Icons';
 import Link from 'next/link';
 
@@ -18,7 +19,7 @@ export default function HomePage() {
       <Sidebar />
 
       {/* 2. Main Content Canvas */}
-      <div className="flex-1 pl-60 flex flex-col min-w-0">
+      <div className="flex-1 lg:pl-60 pl-0 flex flex-col min-w-0 w-full pb-16 lg:pb-0">
         <Header />
         <MarketTickerTape />
 
@@ -191,6 +192,7 @@ export default function HomePage() {
           </div>
 
         </main>
+        <MobileBottomNav />
       </div>
     </div>
   );

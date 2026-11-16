@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import MarketTickerTape from '@/components/MarketTickerTape';
+import MobileBottomNav from '@/components/MobileBottomNav';
 import { useApp } from '@/context/ThemeContext';
 import { ArrowUpRight, ArrowDownRight } from '@/components/Icons';
 
@@ -99,7 +100,7 @@ export default function MarketsHubPage() {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex">
       <Sidebar />
 
-      <div className="flex-1 pl-60 flex flex-col min-w-0">
+      <div className="flex-1 lg:pl-60 pl-0 flex flex-col min-w-0 w-full pb-16 lg:pb-0">
         <Header />
         <MarketTickerTape />
 
@@ -272,6 +273,7 @@ export default function MarketsHubPage() {
           </div>
 
         </main>
+        <MobileBottomNav />
       </div>
     </div>
   );

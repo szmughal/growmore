@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useApp } from '@/context/ThemeContext';
 import {
   LayoutDashboard,
   LineChart,
@@ -18,7 +19,8 @@ import {
   Bell,
   MessageSquare,
   ShieldCheck,
-  GrowMoreLogo
+  GrowMoreLogo,
+  X
 } from '@/components/Icons';
 
 const mainNavigation = [
@@ -45,151 +47,184 @@ const intelligenceNavigation = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useApp();
 
   const isLinkActive = (href: string) => {
     if (href === '/') return pathname === '/';
     return pathname.startsWith(href);
   };
 
+  const handleLinkClick = () => {
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   return (
-    <aside
-      aria-label="Primary Sidebar Navigation"
-      className="fixed left-0 top-0 bottom-0 z-50 w-60 bg-white border-r border-slate-200 flex flex-col justify-between select-none"
-    >
-      {/* Top: Brand Identity Header */}
-      <div>
-        <div className="flex items-center h-14 px-4 border-b border-slate-200 bg-white">
-          <Link href="/" className="flex items-center space-x-2.5 group">
-            <GrowMoreLogo size={28} className="shrink-0 transition-transform duration-150 group-hover:scale-105" />
-            <div className="flex flex-col">
-              <div className="flex items-center space-x-1.5">
-                <span className="text-[15px] font-bold text-[#0F172A] tracking-tight leading-none">
-                  Grow more
-                </span>
-                <span className="px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider rounded bg-[#0F172A] text-white leading-none">
-                  PRO
+    <>
+      {/* Mobile Drawer Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        aria-label="Primary Sidebar Navigation"
+        className={`fixed left-0 top-0 bottom-0 z-50 w-64 lg:w-60 bg-white border-r border-slate-200 flex flex-col justify-between select-none transform transition-transform duration-200 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'
+        }`}
+      >
+        {/* Top: Brand Identity Header */}
+        <div>
+          <div className="flex items-center justify-between h-14 px-4 border-b border-slate-200 bg-white">
+            <Link href="/" onClick={handleLinkClick} className="flex items-center space-x-2.5 group">
+              <GrowMoreLogo size={28} className="shrink-0 transition-transform duration-150 group-hover:scale-105" />
+              <div className="flex flex-col">
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-[15px] font-bold text-[#0F172A] tracking-tight leading-none">
+                    Grow more
+                  </span>
+                  <span className="px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wider rounded bg-[#0F172A] text-white leading-none">
+                    PRO
+                  </span>
+                </div>
+                <span className="text-[10px] font-medium text-slate-500 mt-1 leading-none">
+                  Know Where You Stand
                 </span>
               </div>
-              <span className="text-[10px] font-medium text-slate-500 mt-1 leading-none">
-                Know Where You Stand
-              </span>
-            </div>
-          </Link>
-        </div>
+            </Link>
 
-        {/* Navigation Sections */}
-        <div className="px-3 py-3.5 space-y-5 overflow-y-auto max-h-[calc(100vh-128px)]">
-          
-          {/* Main Terminal */}
-          <div>
-            <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Market Terminal
+            {/* Mobile Close Button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close navigation sidebar"
+              className="lg:hidden p-1.5 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Navigation Sections */}
+          <div className="px-3 py-3.5 space-y-5 overflow-y-auto max-h-[calc(100vh-128px)]">
+            
+            {/* Main Terminal */}
+            <div>
+              <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                Market Terminal
+              </div>
+              <nav aria-label="Market Terminal" className="space-y-0.5">
+                {mainNavigation.map((item) => {
+                  const active = isLinkActive(item.href);
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={handleLinkClick}
+                      className={`flex items-center justify-between px-2.5 py-2 rounded-md text-xs transition-all ${
+                        active
+                          ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
+                          : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2.5">
+                        <Icon className={`w-4 h-4 ${active ? 'text-emerald-400' : 'text-slate-400'}`} />
+                        <span>{item.name}</span>
+                      </div>
+                      {item.badge && (
+                        <span
+                          className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold ${
+                            active
+                              ? 'bg-emerald-500/20 text-emerald-300'
+                              : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
             </div>
-            <nav aria-label="Market Terminal" className="space-y-0.5">
-              {mainNavigation.map((item) => {
-                const active = isLinkActive(item.href);
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`flex items-center justify-between px-2.5 py-2 rounded-md text-xs transition-all ${
-                      active
-                        ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
-                        : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-2.5">
+
+            {/* Wealth & Tracking */}
+            <div>
+              <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                Wealth & Tax
+              </div>
+              <nav aria-label="Wealth & Tax" className="space-y-0.5">
+                {wealthNavigation.map((item) => {
+                  const active = isLinkActive(item.href);
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={handleLinkClick}
+                      className={`flex items-center space-x-2.5 px-2.5 py-2 rounded-md text-xs transition-all ${
+                        active
+                          ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
+                          : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
+                      }`}
+                    >
                       <Icon className={`w-4 h-4 ${active ? 'text-emerald-400' : 'text-slate-400'}`} />
                       <span>{item.name}</span>
-                    </div>
-                    {item.badge && (
-                      <span
-                        className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold ${
-                          active
-                            ? 'bg-emerald-500/20 text-emerald-300'
-                            : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
-
-          {/* Wealth & Tracking */}
-          <div>
-            <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Wealth & Tax
+                    </Link>
+                  );
+                })}
+              </nav>
             </div>
-            <nav aria-label="Wealth & Tax" className="space-y-0.5">
-              {wealthNavigation.map((item) => {
-                const active = isLinkActive(item.href);
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`flex items-center space-x-2.5 px-2.5 py-2 rounded-md text-xs transition-all ${
-                      active
-                        ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
-                        : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${active ? 'text-emerald-400' : 'text-slate-400'}`} />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
-          </div>
 
-          {/* Intelligence & Resources */}
-          <div>
-            <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
-              Research & Macro
+            {/* Intelligence & Resources */}
+            <div>
+              <div className="px-2.5 mb-1.5 text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                Research & Macro
+              </div>
+              <nav aria-label="Research & Macro" className="space-y-0.5">
+                {intelligenceNavigation.map((item) => {
+                  const active = isLinkActive(item.href);
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={handleLinkClick}
+                      className={`flex items-center space-x-2.5 px-2.5 py-2 rounded-md text-xs transition-all ${
+                        active
+                          ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
+                          : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
+                      }`}
+                    >
+                      <Icon className={`w-4 h-4 ${active ? 'text-emerald-400' : 'text-slate-400'}`} />
+                      <span>{item.name}</span>
+                    </Link>
+                  );
+                })}
+              </nav>
             </div>
-            <nav aria-label="Research & Macro" className="space-y-0.5">
-              {intelligenceNavigation.map((item) => {
-                const active = isLinkActive(item.href);
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={`flex items-center space-x-2.5 px-2.5 py-2 rounded-md text-xs transition-all ${
-                      active
-                        ? 'bg-[#0F172A] text-white font-semibold shadow-xs'
-                        : 'text-slate-600 hover:text-[#0F172A] hover:bg-slate-100/80 font-medium'
-                    }`}
-                  >
-                    <Icon className={`w-4 h-4 ${active ? 'text-emerald-400' : 'text-slate-400'}`} />
-                    <span>{item.name}</span>
-                  </Link>
-                );
-              })}
-            </nav>
+
           </div>
-
         </div>
-      </div>
 
-      {/* Bottom: Brand Trust & Transparency Pledge */}
-      <div className="p-3 border-t border-slate-200 bg-slate-50">
-        <div className="flex items-center justify-between text-[11px]">
-          <div className="flex items-center space-x-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-            <span className="text-slate-800 font-semibold">PSX Live Feed</span>
+        {/* Bottom: Brand Trust & Transparency Pledge */}
+        <div className="p-3 border-t border-slate-200 bg-slate-50">
+          <div className="flex items-center justify-between text-[11px]">
+            <div className="flex items-center space-x-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+              <span className="text-slate-800 font-semibold">PSX Live Feed</span>
+            </div>
+            <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 mono-num">
+              0% Ads
+            </span>
           </div>
-          <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 mono-num">
-            0% Ads
-          </span>
         </div>
-      </div>
 
-    </aside>
+      </aside>
+    </>
   );
 }

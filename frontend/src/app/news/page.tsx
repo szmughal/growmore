@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import MobileBottomNav from '@/components/MobileBottomNav';
 
 const newsItems = [
   {
@@ -48,7 +49,7 @@ export default function NewsPage() {
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex">
       <Sidebar />
 
-      <div className="flex-1 pl-60 flex flex-col min-w-0">
+      <div className="flex-1 lg:pl-60 pl-0 flex flex-col min-w-0 w-full pb-16 lg:pb-0">
         <Header />
 
         <main className="p-4 sm:p-6 space-y-6 max-w-[1520px] w-full mx-auto">
@@ -104,6 +105,7 @@ export default function NewsPage() {
           </div>
 
         </main>
+        <MobileBottomNav />
       </div>
     </div>
   );

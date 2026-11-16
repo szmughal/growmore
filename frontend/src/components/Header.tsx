@@ -7,7 +7,9 @@ import { useApp, MarketRegion } from '@/context/ThemeContext';
 import { 
   Search, 
   SlidersHorizontal,
-  ArrowUpRight
+  ArrowUpRight,
+  Menu,
+  GrowMoreLogo
 } from '@/components/Icons';
 
 interface HeaderProps {
@@ -30,7 +32,7 @@ export default function Header({
   onMarketChange 
 }: HeaderProps) {
   const router = useRouter();
-  const { region, setRegion } = useApp();
+  const { region, setRegion, isMobileMenuOpen, setIsMobileMenuOpen } = useApp();
   const [currentTime, setCurrentTime] = useState<string>('');
   const [isCommandOpen, setIsCommandOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -82,20 +84,37 @@ export default function Header({
   return (
     <>
       <header className="sticky top-0 z-40 w-full terminal-header">
-        <div className="flex items-center justify-between h-14 px-4 sm:px-6">
+        <div className="flex items-center justify-between h-14 px-3 sm:px-6">
           
-          {/* Left: PSX Index Switcher & Ticker Badges */}
-          <div className="flex items-center space-x-3">
+          {/* Left: Mobile Hamburger & PSX Index Switcher */}
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(prev => !prev)}
+              aria-label="Toggle navigation menu"
+              className="lg:hidden p-2 -ml-1 text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-md transition-colors"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            {/* Mobile Compact Brand */}
+            <Link href="/" className="lg:hidden flex items-center space-x-1.5 shrink-0">
+              <GrowMoreLogo size={24} />
+              <span className="text-sm font-bold text-[#0F172A] tracking-tight hidden xs:inline">Grow more</span>
+            </Link>
+
+            {/* Index Switcher Tabs */}
             <div
               role="tablist"
               aria-label="PSX Market Indices"
-              className="flex items-center space-x-1 p-1 bg-slate-100 border border-slate-200 rounded-md"
+              className="flex items-center space-x-0.5 sm:space-x-1 p-0.5 sm:p-1 bg-slate-100 border border-slate-200 rounded-md"
             >
               <button
                 role="tab"
                 aria-selected={region === 'KSE100'}
                 onClick={() => handleMarketSelect('KSE100')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded transition-all ${
+                className={`px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold rounded transition-all ${
                   region === 'KSE100' 
                     ? 'bg-[#0F172A] text-white shadow-xs' 
                     : 'text-slate-600 hover:text-[#0F172A]'
@@ -107,19 +126,20 @@ export default function Header({
                 role="tab"
                 aria-selected={region === 'KMI30'}
                 onClick={() => handleMarketSelect('KMI30')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded transition-all ${
+                className={`px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold rounded transition-all ${
                   region === 'KMI30' 
                     ? 'bg-[#0F172A] text-white shadow-xs' 
                     : 'text-slate-600 hover:text-[#0F172A]'
                 }`}
               >
-                KMI 30 (Shariah)
+                <span className="inline sm:hidden">KMI 30</span>
+                <span className="hidden sm:inline">KMI 30 (Shariah)</span>
               </button>
               <button
                 role="tab"
                 aria-selected={region === 'KSE30'}
                 onClick={() => handleMarketSelect('KSE30')}
-                className={`px-2.5 py-1 text-xs font-semibold rounded transition-all ${
+                className={`px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-semibold rounded transition-all ${
                   region === 'KSE30' 
                     ? 'bg-[#0F172A] text-white shadow-xs' 
                     : 'text-slate-600 hover:text-[#0F172A]'
@@ -130,7 +150,7 @@ export default function Header({
             </div>
 
             {/* Market Status & Clock */}
-            <div className="hidden lg:flex items-center space-x-2 pl-3 border-l border-slate-200 text-xs text-slate-600">
+            <div className="hidden xl:flex items-center space-x-2 pl-3 border-l border-slate-200 text-xs text-slate-600">
               <span className="w-2 h-2 rounded-full bg-emerald-600" />
               <span className="text-[#0F172A] font-semibold">
                 {region === 'KSE100' ? 'PSX KSE 100' : region === 'KMI30' ? 'PSX KMI 30' : 'PSX KSE 30'}
@@ -144,7 +164,7 @@ export default function Header({
           </div>
 
           {/* Center: Quick Search Command Bar */}
-          <div className="flex-1 max-w-md mx-4 hidden md:block">
+          <div className="flex-1 max-w-md mx-3 hidden md:block">
             <button
               type="button"
               onClick={() => setIsCommandOpen(true)}
@@ -161,11 +181,21 @@ export default function Header({
             </button>
           </div>
 
-          {/* Right: Currency, Screener, Import */}
-          <div className="flex items-center space-x-2.5">
+          {/* Right: Currency, Mobile Search, Screener, Import */}
+          <div className="flex items-center space-x-1.5 sm:space-x-2.5">
+            {/* Mobile Search Button */}
+            <button
+              type="button"
+              onClick={() => setIsCommandOpen(true)}
+              aria-label="Search"
+              className="md:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-md"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             {/* Currency Badge */}
-            <div className="px-2.5 py-1.5 bg-slate-100 border border-slate-200 rounded-md text-[11px] font-semibold text-[#0F172A] mono-num">
-              PKR (Rs)
+            <div className="hidden xs:block px-2 sm:px-2.5 py-1 sm:py-1.5 bg-slate-100 border border-slate-200 rounded-md text-[10px] sm:text-[11px] font-semibold text-[#0F172A] mono-num">
+              PKR
             </div>
 
             {/* Quick Screener Link */}
@@ -180,9 +210,9 @@ export default function Header({
             {/* Primary CTA: Grow more Import */}
             <Link
               href="/portfolio"
-              className="flex items-center space-x-1.5 px-3 py-1.5 rounded-md text-xs font-semibold text-white bg-[#059669] hover:bg-[#047857] shadow-xs transition-colors"
+              className="flex items-center space-x-1 px-2.5 sm:px-3 py-1.5 rounded-md text-[11px] sm:text-xs font-semibold text-white bg-[#059669] hover:bg-[#047857] shadow-xs transition-colors whitespace-nowrap"
             >
-              <span>Grow more Import</span>
+              <span>Import</span>
             </Link>
           </div>
 
