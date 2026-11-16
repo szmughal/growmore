@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useApp, MarketRegion } from '@/context/ThemeContext';
+import { searchStocks } from '@/data/psxStocks';
 import { 
   Search, 
   SlidersHorizontal,
@@ -17,15 +18,11 @@ interface HeaderProps {
   onMarketChange?: (market: MarketRegion) => void;
 }
 
-const quickSearchItems = [
-  { code: 'OGDC', name: 'Oil & Gas Development Co (PSX)', type: 'Equity', href: '/fundamentals', meta: 'PKR 148.50 (+3.12%)' },
-  { code: 'MEBL', name: 'Meezan Bank Limited (PSX)', type: 'Equity', href: '/fundamentals', meta: 'PKR 242.00 (+1.30%)' },
-  { code: 'ENGRO', name: 'Engro Corporation (PSX)', type: 'Equity', href: '/fundamentals', meta: 'PKR 334.80 (+0.85%)' },
-  { code: 'SYS', name: 'Systems Limited (PSX)', type: 'Equity', href: '/technicals', meta: 'PKR 462.10 (-1.10%)' },
-  { code: 'LUCK', name: 'Lucky Cement Limited (PSX)', type: 'Equity', href: '/fundamentals', meta: 'PKR 894.50 (+1.38%)' },
+const defaultTools = [
   { code: 'ZAKAT', name: 'AAOIFI Shariah Equity Zakat Calculator', type: 'Tool', href: '/tools', meta: '2.5% Calculation' },
   { code: 'CHART', name: 'Grow more Advanced Charting & Auto-Pivots', type: 'Terminal', href: '/mychart', meta: 'KSE 100 / Fibs' },
   { code: 'CGT', name: 'Capital Gains Tax & Portfolio Net Worth', type: 'Wealth', href: '/portfolio', meta: '8 Asset Classes' },
+  { code: 'SCREENER', name: 'PSX Multi-Metric Equity Screener', type: 'Tool', href: '/screener', meta: '871 Scrips' },
 ];
 
 export default function Header({ 
@@ -74,12 +71,21 @@ export default function Header({
     if (onMarketChange) onMarketChange(code);
   };
 
-  const filteredItems = quickSearchItems.filter(
+  const matchingStocks = searchStocks(searchQuery, 20).map((s) => ({
+    code: s.symbol,
+    name: `${s.name} (${s.sector})`,
+    type: s.isShariah ? 'Shariah Equity' : 'PSX Equity',
+    href: '/fundamentals',
+    meta: `PKR ${s.price.toFixed(2)} (${s.changePercent >= 0 ? '+' : ''}${s.changePercent.toFixed(2)}%)`,
+  }));
+
+  const matchingTools = defaultTools.filter(
     (item) =>
       item.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      item.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const filteredItems = [...matchingStocks, ...matchingTools];
 
   return (
     <>

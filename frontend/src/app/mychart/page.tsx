@@ -18,13 +18,13 @@ const intervalConfigMap: Record<IntervalType, {
   slope: number;
   dmaPath: string;
 }> = {
-  '1m': { open: '104,210', high: '104,295', low: '104,190', close: '104,285', vol: '3.2M', seedOffset: 1, slope: 2.2, dmaPath: 'M 30 290 Q 250 260, 500 230 T 980 180' },
-  '5m': { open: '104,050', high: '104,310', low: '103,980', close: '104,285', vol: '14.8M', seedOffset: 2, slope: 2.8, dmaPath: 'M 30 305 Q 250 275, 500 235 T 980 165' },
-  '15m': { open: '103,820', high: '104,380', low: '103,750', close: '104,285', vol: '42.1M', seedOffset: 3, slope: 3.2, dmaPath: 'M 30 315 Q 250 280, 500 240 T 980 155' },
-  '1h': { open: '103,450', high: '104,420', low: '103,310', close: '104,285', vol: '128.5M', seedOffset: 4, slope: 3.6, dmaPath: 'M 30 325 Q 250 285, 500 238 T 980 148' },
-  'D': { open: '103,120', high: '104,450', low: '103,050', close: '104,285', vol: '482.4M', seedOffset: 5, slope: 4.0, dmaPath: 'M 30 320 Q 250 290, 500 240 T 980 140' },
-  'W': { open: '101,200', high: '104,680', low: '100,850', close: '104,285', vol: '2.18B', seedOffset: 6, slope: 4.5, dmaPath: 'M 30 350 Q 250 310, 500 245 T 980 125' },
-  'M': { open: '96,400', high: '105,420', low: '95,800', close: '104,285', vol: '9.42B', seedOffset: 7, slope: 5.0, dmaPath: 'M 30 380 Q 250 330, 500 250 T 980 110' },
+  '1m': { open: '178,150', high: '178,210', low: '178,130', close: '178,183', vol: '1.8M', seedOffset: 1, slope: 2.2, dmaPath: 'M 30 290 Q 250 260, 500 230 T 980 180' },
+  '5m': { open: '178,080', high: '178,240', low: '178,040', close: '178,183', vol: '8.4M', seedOffset: 2, slope: 2.8, dmaPath: 'M 30 305 Q 250 275, 500 235 T 980 165' },
+  '15m': { open: '177,950', high: '178,380', low: '177,910', close: '178,183', vol: '24.1M', seedOffset: 3, slope: 3.2, dmaPath: 'M 30 315 Q 250 280, 500 240 T 980 155' },
+  '1h': { open: '177,874', high: '178,720', low: '177,820', close: '178,183', vol: '78.5M', seedOffset: 4, slope: 3.6, dmaPath: 'M 30 325 Q 250 285, 500 238 T 980 148' },
+  'D': { open: '178,315', high: '179,693', low: '178,065', close: '178,183', vol: '224.1M', seedOffset: 5, slope: 4.0, dmaPath: 'M 30 320 Q 250 290, 500 240 T 980 140' },
+  'W': { open: '174,200', high: '179,850', low: '173,850', close: '178,183', vol: '1.18B', seedOffset: 6, slope: 4.5, dmaPath: 'M 30 350 Q 250 310, 500 245 T 980 125' },
+  'M': { open: '168,400', high: '180,420', low: '167,800', close: '178,183', vol: '4.42B', seedOffset: 7, slope: 5.0, dmaPath: 'M 30 380 Q 250 330, 500 250 T 980 110' },
 };
 
 export default function MyChartPage() {
@@ -50,7 +50,7 @@ export default function MyChartPage() {
                 <span className="text-xs text-slate-500 ml-2">Advanced Charting Terminal</span>
               </div>
               <span className="text-xs mono-num font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                104,285.40 (+1.24%)
+                178,182.95 (+0.17%)
               </span>
             </div>
 
@@ -87,7 +87,7 @@ export default function MyChartPage() {
                     selectedOverlay === 'masood' ? 'bg-white text-emerald-700 shadow-sm font-semibold' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Dr. Masood Momentum
+                  Our experts Momentum
                 </button>
               </div>
             </div>
@@ -112,7 +112,7 @@ export default function MyChartPage() {
                   {selectedOverlay === 'autodraw'
                     ? 'Grow more Auto-Pivots & Fibonacci'
                     : selectedOverlay === 'masood'
-                    ? 'Dr. Masood Stage 2 Running Horses'
+                    ? 'Our experts Stage 2 Running Horses'
                     : 'Pure Price Action (No Overlays)'}
                 </span>
               </div>
@@ -138,14 +138,14 @@ export default function MyChartPage() {
                 {selectedOverlay === 'autodraw' && (
                   <>
                     <line x1="0" y1="120" x2="1000" y2="120" stroke="#e11d48" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="4 4" />
-                    <text x="15" y="114" fill="#be123c" fontSize="10" fontFamily="monospace" fontWeight="600">Fib 0.618 Golden Pocket (104,850) — R1 Pivot</text>
+                    <text x="15" y="114" fill="#be123c" fontSize="10" fontFamily="monospace" fontWeight="600">Fib 0.618 Golden Pocket (179,250) — R1 Pivot</text>
 
                     <line x1="0" y1="220" x2="1000" y2="220" stroke="#059669" strokeOpacity="0.45" strokeWidth="1" strokeDasharray="4 4" />
-                    <text x="15" y="214" fill="#047857" fontSize="10" fontFamily="monospace" fontWeight="600">Fib 0.382 Confluence Level (103,420) — S1 Support</text>
+                    <text x="15" y="214" fill="#047857" fontSize="10" fontFamily="monospace" fontWeight="600">Fib 0.382 Confluence Level (177,420) — S1 Support</text>
                   </>
                 )}
 
-                {/* Dr. Masood Momentum Overlay */}
+                {/* Our Experts Momentum Overlay */}
                 {selectedOverlay === 'masood' && (
                   <>
                     <path

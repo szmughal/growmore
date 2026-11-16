@@ -228,7 +228,7 @@ export default function TechnicalsPage() {
             
             <div className="terminal-card p-4">
               <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-1">Momentum Leaders</div>
-              <div className="text-lg font-semibold text-slate-900">Dr. Masood&apos;s Running Horses</div>
+              <div className="text-lg font-semibold text-slate-900">Our Experts&apos; Running Horses</div>
               <p className="text-xs text-slate-500 mt-1">
                 Stocks breaking out of consolidation channels with weekly trend alignment
               </p>

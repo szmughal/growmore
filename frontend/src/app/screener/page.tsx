@@ -10,7 +10,7 @@ const presets = [
   { id: '1', name: 'Quality at a Fair Price', count: 5, desc: 'High ROE, positive 5Y profit CAGR, P/E below sector median' },
   { id: '2', name: 'Deep Value (Discount to BV)', count: 4, desc: 'P/B < 1.0, positive operating cash flow, low debt' },
   { id: '3', name: 'Dividend Income Aristocrats', count: 5, desc: 'Dividend yield > 8%, dividend coverage ratio > 1.5x' },
-  { id: '4', name: 'Dr. Masood Running Horses', count: 4, desc: 'Stage 2 markup, breaking 52-week highs with heavy volume' },
+  { id: '4', name: 'Our Experts Running Horses', count: 4, desc: 'Stage 2 markup, breaking 52-week highs with heavy volume' },
   { id: '5', name: 'Trend Reversal by ICS', count: 3, desc: 'Oversold RSI < 35 with bullish candle confirmation and MACD cross' },
   { id: '6', name: 'Islamic Shariah Large Caps', count: 6, desc: 'KMI-30 eligible, non-interest leverage compliant' },
 ];
@@ -31,15 +31,22 @@ interface ScreenerStock {
 }
 
 const allScreenerStocks: ScreenerStock[] = [
-  { symbol: 'OGDC', name: 'Oil & Gas Dev Co', sector: 'Oil & Gas', price: 148.50, fairValue: 215.00, discount: 44.8, pe: 4.8, pb: 0.9, divYield: 11.2, roe: 22.4, shariah: true, presets: ['1', '2', '3', '4', '6'] },
-  { symbol: 'PPL', name: 'Pakistan Petroleum', sector: 'Oil & Gas', price: 128.20, fairValue: 182.00, discount: 41.9, pe: 4.2, pb: 0.8, divYield: 10.8, roe: 20.1, shariah: true, presets: ['1', '2', '3', '4', '6'] },
-  { symbol: 'MEBL', name: 'Meezan Bank Ltd', sector: 'Islamic Banking', price: 242.00, fairValue: 310.00, discount: 28.1, pe: 5.4, pb: 1.8, divYield: 12.5, roe: 38.6, shariah: true, presets: ['1', '3', '4', '6'] },
-  { symbol: 'ENGRO', name: 'Engro Corporation', sector: 'Fertilizer', price: 334.80, fairValue: 420.00, discount: 25.4, pe: 7.6, pb: 1.2, divYield: 9.4, roe: 18.2, shariah: true, presets: ['1', '3', '6'] },
-  { symbol: 'LUCK', name: 'Lucky Cement Ltd', sector: 'Cement', price: 894.50, fairValue: 1120.00, discount: 25.2, pe: 8.4, pb: 1.4, divYield: 5.8, roe: 21.0, shariah: true, presets: ['1', '6'] },
-  { symbol: 'HUBC', name: 'Hub Power Company', sector: 'Power Gen', price: 132.70, fairValue: 185.00, discount: 39.4, pe: 3.8, pb: 0.9, divYield: 14.2, roe: 26.8, shariah: true, presets: ['2', '3', '5', '6'] },
-  { symbol: 'PRL', name: 'Pakistan Refinery', sector: 'Refinery', price: 34.60, fairValue: 48.00, discount: 38.7, pe: 5.1, pb: 0.7, divYield: 4.2, roe: 16.5, shariah: false, presets: ['2', '4'] },
-  { symbol: 'SYS', name: 'Systems Limited', sector: 'Technology', price: 462.10, fairValue: 540.00, discount: 16.8, pe: 18.2, pb: 4.2, divYield: 2.4, roe: 24.5, shariah: true, presets: ['5'] },
-  { symbol: 'DGKC', name: 'D.G. Khan Cement', sector: 'Cement', price: 82.40, fairValue: 114.00, discount: 38.3, pe: 9.2, pb: 0.6, divYield: 0.0, roe: 12.4, shariah: true, presets: ['5'] },
+  { symbol: 'HBL', name: 'Habib Bank Limited', sector: 'Commercial Banks', price: 308.22, fairValue: 459.93, discount: 33.0, pe: 6.51, pb: 0.90, divYield: 7.46, roe: 14.42, shariah: false, presets: ['1', '2', '3'] },
+  { symbol: 'OGDC', name: 'Oil & Gas Dev Co', sector: 'Oil & Gas', price: 316.21, fairValue: 420.00, discount: 24.7, pe: 5.18, pb: 0.92, divYield: 5.85, roe: 22.40, shariah: true, presets: ['1', '2', '3', '4', '6'] },
+  { symbol: 'UBL', name: 'United Bank Limited', sector: 'Commercial Banks', price: 433.22, fairValue: 520.00, discount: 16.7, pe: 6.38, pb: 1.25, divYield: 7.39, roe: 28.50, shariah: false, presets: ['1', '3', '4'] },
+  { symbol: 'MEBL', name: 'Meezan Bank Ltd', sector: 'Islamic Banking', price: 551.25, fairValue: 640.00, discount: 13.9, pe: 10.42, pb: 1.95, divYield: 5.53, roe: 38.60, shariah: true, presets: ['1', '3', '4', '6'] },
+  { symbol: 'MARI', name: 'Mari Petroleum Co', sector: 'Oil & Gas', price: 737.28, fairValue: 860.00, discount: 14.3, pe: 9.55, pb: 2.10, divYield: 3.66, roe: 25.40, shariah: true, presets: ['1', '4', '6'] },
+  { symbol: 'FFC', name: 'Fauji Fertilizer Co', sector: 'Fertilizer', price: 566.59, fairValue: 680.00, discount: 16.7, pe: 8.86, pb: 1.85, divYield: 7.24, roe: 29.40, shariah: true, presets: ['1', '3', '4', '6'] },
+  { symbol: 'LUCK', name: 'Lucky Cement Ltd', sector: 'Cement', price: 444.52, fairValue: 560.00, discount: 20.6, pe: 7.34, pb: 1.60, divYield: 1.12, roe: 21.00, shariah: true, presets: ['1', '6'] },
+  { symbol: 'PPL', name: 'Pakistan Petroleum', sector: 'Oil & Gas', price: 227.23, fairValue: 310.00, discount: 26.7, pe: 6.01, pb: 0.88, divYield: 5.28, roe: 20.10, shariah: true, presets: ['1', '2', '4', '6'] },
+  { symbol: 'MCB', name: 'MCB Bank Limited', sector: 'Commercial Banks', price: 409.85, fairValue: 490.00, discount: 16.4, pe: 8.34, pb: 1.10, divYield: 6.59, roe: 31.20, shariah: false, presets: ['1', '3'] },
+  { symbol: 'SYS', name: 'Systems Limited', sector: 'Technology', price: 114.52, fairValue: 160.00, discount: 28.4, pe: 14.26, pb: 4.20, divYield: 1.75, roe: 24.50, shariah: true, presets: ['5'] },
+  { symbol: 'ENGROH', name: 'Engro Holdings', sector: 'Fertilizer / Holding', price: 279.42, fairValue: 350.00, discount: 20.2, pe: 7.30, pb: 1.30, divYield: 8.40, roe: 18.20, shariah: true, presets: ['1', '3', '6'] },
+  { symbol: 'EFERT', name: 'Engro Fertilizers', sector: 'Fertilizer', price: 210.33, fairValue: 260.00, discount: 19.1, pe: 11.42, pb: 2.20, divYield: 6.30, roe: 32.10, shariah: true, presets: ['1', '3', '6'] },
+  { symbol: 'HUBC', name: 'Hub Power Company', sector: 'Power Gen', price: 207.02, fairValue: 260.00, discount: 20.4, pe: 5.29, pb: 0.95, divYield: 9.66, roe: 26.80, shariah: true, presets: ['2', '3', '6'] },
+  { symbol: 'PSO', name: 'Pakistan State Oil', sector: 'Oil & Gas Marketing', price: 368.01, fairValue: 490.00, discount: 24.9, pe: 3.89, pb: 0.70, divYield: 2.72, roe: 18.00, shariah: true, presets: ['2', '5', '6'] },
+  { symbol: 'DGKC', name: 'D.G. Khan Cement', sector: 'Cement', price: 202.01, fairValue: 270.00, discount: 25.2, pe: 7.21, pb: 0.85, divYield: 0.50, roe: 14.20, shariah: true, presets: ['2', '5'] },
+  { symbol: 'PRL', name: 'Pakistan Refinery', sector: 'Refinery', price: 38.45, fairValue: 54.00, discount: 28.8, pe: 5.10, pb: 0.75, divYield: 4.20, roe: 16.50, shariah: false, presets: ['2', '4'] },
 ];
 
 export default function ScreenerPage() {
