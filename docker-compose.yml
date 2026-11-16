@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # FastAPI Financial Backend Engine
+  # ==========================================
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: growmore-backend
+    restart: unless-stopped
+    environment:
+      - APP_NAME=Grow More and Stable Life
+      - ENVIRONMENT=production
+      - DEBUG=false
+      - API_V1_PREFIX=/api/v1
+      - SECRET_KEY=${SECRET_KEY:-growmore-production-super-secret-key-change-in-env-999}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=10080
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_ENABLED=true
+    volumes:
+      - db_data:/app/data
+    networks:
+      - growmore-network
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ==========================================
+  # Next.js 14 Web Frontend
+  # ==========================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: growmore-frontend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api/v1
+    networks:
+      - growmore-network
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ==========================================
+  # In-Memory Cache & Message Broker
+  # ==========================================
+  redis:
+    image: redis:7.2-alpine
+    container_name: growmore-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    networks:
+      - growmore-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+  # ==========================================
+  # Nginx Gateway & Reverse Proxy
+  # ==========================================
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: growmore-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - nginx_logs:/var/log/nginx
+    networks:
+      - growmore-network
+    depends_on:
+      - backend
+      - frontend
+
+networks:
+  growmore-network:
+    driver: bridge
+
+volumes:
+  db_data:
+  redis_data:
+  nginx_logs:

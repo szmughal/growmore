@@ -1,0 +1,24 @@
+[Unit]
+Description=Grow More and Stable Life - Financial Intelligence API
+After=network.target redis-server.service
+
+[Service]
+Type=simple
+User=growmore
+Group=growmore
+WorkingDirectory=/var/www/growmore
+Environment="PATH=/var/www/growmore/.venv/bin"
+EnvironmentFile=/var/www/growmore/.env
+ExecStart=/var/www/growmore/.venv/bin/uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --workers 4 --proxy-headers
+Restart=always
+RestartSec=5s
+LimitNOFILE=65536
+
+# Security Hardening Sandbox
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
