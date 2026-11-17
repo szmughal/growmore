@@ -5,7 +5,7 @@ import { useApp } from '@/context/ThemeContext';
 import { ArrowUpRight, ArrowDownRight } from '@/components/Icons';
 
 export default function MarketTickerTape() {
-  const { stocks, indices, tickCount, isStreaming, toggleStreaming } = useApp();
+  const { stocks, indices, tickCount, isStreaming, toggleStreaming, isMarketOpen } = useApp();
 
   const indexItems = [
     {
@@ -47,20 +47,20 @@ export default function MarketTickerTape() {
     <div className="w-full bg-white border-b border-slate-200 overflow-hidden select-none flex items-center h-9">
       {/* Left Pinned Live Stream Status Control */}
       <div className="flex items-center space-x-2 px-3 h-full bg-slate-50 border-r border-slate-200 z-10 shrink-0">
-        <span className={`w-2 h-2 rounded-full bg-emerald-600 shrink-0 ${isStreaming ? 'live-beacon' : 'opacity-40'}`} />
+        <span className={`w-2 h-2 rounded-full shrink-0 ${isMarketOpen && isStreaming ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
         <span className="text-slate-800 font-bold text-[11px] uppercase tracking-wider">
-          PSX Live Tape
+          {isMarketOpen ? 'PSX Live Tape' : 'PSX Official Close'}
         </span>
-        <span className="text-[10px] mono-num px-1.5 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">
-          Tick #{tickCount}
+        <span className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+          {isMarketOpen ? `Tick #${tickCount}` : 'Market Closed'}
         </span>
         <button
           type="button"
           onClick={toggleStreaming}
-          title={isStreaming ? 'Pause live stream' : 'Resume live stream'}
+          title={isStreaming ? 'Pause stream' : 'Simulate live stream'}
           className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:text-slate-900"
         >
-          {isStreaming ? 'Pause' : 'Resume'}
+          {isStreaming ? 'Pause' : 'Simulate'}
         </button>
       </div>
 

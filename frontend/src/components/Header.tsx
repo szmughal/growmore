@@ -29,7 +29,7 @@ export default function Header({
   onMarketChange 
 }: HeaderProps) {
   const router = useRouter();
-  const { region, setRegion, isMobileMenuOpen, setIsMobileMenuOpen } = useApp();
+  const { region, setRegion, isMobileMenuOpen, setIsMobileMenuOpen, isMarketOpen } = useApp();
   const [currentTime, setCurrentTime] = useState<string>('');
   const [isCommandOpen, setIsCommandOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -157,12 +157,16 @@ export default function Header({
 
             {/* Market Status & Clock */}
             <div className="hidden xl:flex items-center space-x-2 pl-3 border-l border-slate-200 text-xs text-slate-600">
-              <span className="w-2 h-2 rounded-full bg-emerald-600" />
+              <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
               <span className="text-[#0F172A] font-semibold">
                 {region === 'KSE100' ? 'PSX KSE 100' : region === 'KMI30' ? 'PSX KMI 30' : 'PSX KSE 30'}
               </span>
               <span className="text-slate-300">•</span>
-              <span className="mono-num text-slate-700 font-medium">{currentTime || '09:30:00'}</span>
+              <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${isMarketOpen ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>
+                {isMarketOpen ? 'Live' : 'Market Closed'}
+              </span>
+              <span className="text-slate-300">•</span>
+              <span className="mono-num text-slate-700 font-medium">{currentTime || '16:00:00'}</span>
               <span className="text-slate-500 text-[10px] font-semibold">
                 PKT
               </span>

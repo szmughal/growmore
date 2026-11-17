@@ -6,7 +6,7 @@ import { useApp } from '@/context/ThemeContext';
 import { ArrowUpRight, ArrowDownRight, ExternalLink } from '@/components/Icons';
 
 export default function MarketDataTable() {
-  const { stocks, tickCount, lastTickTime } = useApp();
+  const { stocks, tickCount, lastTickTime, isMarketOpen } = useApp();
   const [activeTab, setActiveTab] = useState<'active' | 'gainers' | 'losers'>('active');
 
   const filteredData = [...stocks].sort((a, b) => {
@@ -20,10 +20,10 @@ export default function MarketDataTable() {
       {/* Table Header Controls */}
       <div className="flex flex-wrap items-center justify-between px-4 py-3 border-b border-slate-200 gap-3">
         <div className="flex items-center space-x-2.5">
-          <span className="w-2 h-2 rounded-full bg-emerald-600 live-beacon" />
+          <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
           <span className="text-sm font-semibold text-slate-900">Market Tape &amp; Leaders</span>
-          <span className="text-xs text-emerald-700 font-semibold mono-num bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-            Streaming Tick #{tickCount} ({lastTickTime})
+          <span className={`text-xs font-semibold mono-num px-2 py-0.5 rounded border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+            {isMarketOpen ? `Streaming Tick #${tickCount} (${lastTickTime})` : 'Market Closed • Final Close'}
           </span>
         </div>
 

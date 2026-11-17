@@ -59,6 +59,32 @@ export interface ExecutedTrade {
   side: 'BUY' | 'SELL';
 }
 
+export function checkIsPSXMarketOpen(): boolean {
+  try {
+    const now = new Date();
+    const pktString = now.toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
+    const pktDate = new Date(pktString);
+    const day = pktDate.getDay(); // 0 = Sunday, 6 = Saturday
+    if (day === 0 || day === 6) return false;
+
+    const hours = pktDate.getHours();
+    const minutes = pktDate.getMinutes();
+    const totalMinutes = hours * 60 + minutes;
+
+    // Monday - Thursday: 09:15 to 15:30 PKT
+    if (day >= 1 && day <= 4) {
+      return totalMinutes >= 555 && totalMinutes <= 930;
+    }
+    // Friday: 09:00 - 12:00 and 14:30 - 16:30 PKT
+    if (day === 5) {
+      return (totalMinutes >= 540 && totalMinutes <= 720) || (totalMinutes >= 870 && totalMinutes <= 990);
+    }
+    return false;
+  } catch (e) {
+    return false;
+  }
+}
+
 const INITIAL_STOCKS: LiveStock[] = [
   { symbol: 'HBL', name: 'Habib Bank Limited', sector: 'Commercial Banks', price: 308.22, prevClose: 308.22, change: 0.00, changePercent: 0.00, volumeM: 1.58, valueM: 487, pe: 6.51, pb: 0.90, marketCap: '452.1B', fairValue: 459.93, gmScore: 91, qfScore: 'A+', checksPassed: 6, divYield: 7.46, roe: 14.42, bid: 308.10, ask: 308.34, lastDirection: 'none', lastTradeShares: 1200 },
   { symbol: 'OGDC', name: 'Oil & Gas Dev Co', sector: 'Oil & Gas', price: 315.87, prevClose: 313.40, change: 2.47, changePercent: 0.79, volumeM: 12.50, valueM: 3948, pe: 5.80, pb: 0.92, marketCap: '1358.5B', fairValue: 420.00, gmScore: 88, qfScore: 'A+', checksPassed: 6, divYield: 8.20, roe: 22.40, bid: 315.75, ask: 315.99, lastDirection: 'up', lastTradeShares: 2500 },
@@ -182,6 +208,8 @@ interface AppContextType {
   setRegion: (r: MarketRegion) => void;
   currency: CurrencyCode;
   setCurrency: (c: CurrencyCode) => void;
+  isMarketOpen: boolean;
+  marketStatusText: string;
   isStreaming: boolean;
   toggleStreaming: () => void;
   tickCount: number;
@@ -200,9 +228,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<ThemeMode>('light');
   const [region, setRegion] = useState<MarketRegion>('KSE100');
   const [currency, setCurrency] = useState<CurrencyCode>('PKR');
-  const [isStreaming, setIsStreaming] = useState<boolean>(true);
+  
+  // Real PSX market session status
+  const [isMarketOpen, setIsMarketOpen] = useState<boolean>(false);
+  const [isStreaming, setIsStreaming] = useState<boolean>(false);
   const [tickCount, setTickCount] = useState<number>(1);
-  const [lastTickTime, setLastTickTime] = useState<string>('09:30:02');
+  const [lastTickTime, setLastTickTime] = useState<string>('Close');
   const [stocks, setStocks] = useState<LiveStock[]>(INITIAL_STOCKS);
   const [indices, setIndices] = useState<Record<MarketRegion, LiveIndexData>>(INITIAL_INDICES);
   const [liveTrades, setLiveTrades] = useState<ExecutedTrade[]>(INITIAL_TRADES);
@@ -212,6 +243,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     document.documentElement.classList.remove('dark');
     localStorage.setItem('gm_theme', 'light');
+
+    // Evaluate real-world market status on load
+    const open = checkIsPSXMarketOpen();
+    setIsMarketOpen(open);
+    setIsStreaming(open); // Do not run streaming interval if market is closed!
+    if (!open) {
+      setLastTickTime('Market Closed');
+    }
   }, []);
 
   // Real-Time PSX Order-Book & Index Tick Engine (fires every 1.6 seconds)
@@ -362,6 +401,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setRegion: handleSetRegion,
         currency,
         setCurrency: handleSetCurrency,
+        isMarketOpen,
+        marketStatusText: isMarketOpen ? 'Market Open • Live Streaming' : 'Market Closed • Data As Of Close',
         isStreaming,
         toggleStreaming,
         tickCount,
