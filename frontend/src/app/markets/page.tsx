@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import MarketTickerTape from '@/components/MarketTickerTape';
@@ -216,8 +217,24 @@ export default function MarketsHubPage() {
                       key={`${row.code}-${tickCount}`}
                       className={row.dir === 'up' ? 'tick-flash-up' : row.dir === 'down' ? 'tick-flash-down' : ''}
                     >
-                      <td className="font-bold text-slate-900 mono-num">{row.code}</td>
-                      <td className="text-slate-800 font-medium">{row.name}</td>
+                      <td className="font-bold text-slate-900 mono-num">
+                        {selectedCategory === 'PSX Equities' ? (
+                          <Link href={`/fundamentals/${row.code}`} className="hover:text-emerald-700 hover:underline">
+                            {row.code}
+                          </Link>
+                        ) : (
+                          row.code
+                        )}
+                      </td>
+                      <td className="text-slate-800 font-medium">
+                        {selectedCategory === 'PSX Equities' ? (
+                          <Link href={`/fundamentals/${row.code}`} className="hover:underline">
+                            {row.name}
+                          </Link>
+                        ) : (
+                          row.name
+                        )}
+                      </td>
                       <td>
                         <span className="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200">
                           {row.sector}

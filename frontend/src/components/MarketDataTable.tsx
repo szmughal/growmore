@@ -92,7 +92,7 @@ export default function MarketDataTable() {
               return (
                 <tr key={`${stock.symbol}-${tickCount}`} className={rowFlash}>
                   <td>
-                    <div className="flex items-center space-x-2">
+                    <Link href={`/fundamentals/${stock.symbol}`} className="flex items-center space-x-2 group">
                       <span
                         className={`w-1.5 h-1.5 rounded-full ${
                           stock.lastDirection === 'up'
@@ -102,11 +102,11 @@ export default function MarketDataTable() {
                             : 'bg-slate-300'
                         }`}
                       />
-                      <span className="font-bold text-slate-900">{stock.symbol}</span>
-                      <span className="text-slate-500 text-xs truncate max-w-[140px] hidden sm:inline">
+                      <span className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">{stock.symbol}</span>
+                      <span className="text-slate-500 text-xs truncate max-w-[140px] hidden sm:inline group-hover:text-slate-700">
                         {stock.name}
                       </span>
-                    </div>
+                    </Link>
                   </td>
                   <td>
                     <span className="text-slate-600 text-xs">{stock.sector}</span>
@@ -139,8 +139,8 @@ export default function MarketDataTable() {
                   <td className="text-right mono-num text-slate-600">{stock.marketCap}</td>
                   <td className="text-center">
                     <Link
-                      href={`/fundamentals`}
-                      className="inline-flex items-center text-xs text-slate-500 hover:text-slate-900 transition-colors"
+                      href={`/fundamentals/${stock.symbol}`}
+                      className="inline-flex items-center text-xs text-slate-500 hover:text-emerald-600 transition-colors"
                       title="Open Fundamentals & DCF"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />

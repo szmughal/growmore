@@ -75,7 +75,7 @@ export default function Header({
     code: s.symbol,
     name: `${s.name} (${s.sector})`,
     type: s.isShariah ? 'Shariah Equity' : 'PSX Equity',
-    href: '/fundamentals',
+    href: `/fundamentals/${s.symbol}`,
     meta: `PKR ${s.price.toFixed(2)} (${s.changePercent >= 0 ? '+' : ''}${s.changePercent.toFixed(2)}%)`,
   }));
 

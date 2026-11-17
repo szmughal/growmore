@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import MobileBottomNav from '@/components/MobileBottomNav';
@@ -215,9 +216,20 @@ export default function ScreenerPage() {
                 </thead>
                 <tbody>
                   {filteredStocks.map((stock) => (
-                    <tr key={stock.symbol}>
-                      <td className="font-semibold text-slate-900">{stock.symbol}</td>
-                      <td className="text-slate-700 text-xs">{stock.name}</td>
+                    <tr key={stock.symbol} className="hover:bg-slate-50 transition-colors">
+                      <td>
+                        <Link
+                          href={`/fundamentals/${stock.symbol}`}
+                          className="font-bold text-slate-900 hover:text-emerald-700 transition-colors mono-num"
+                        >
+                          {stock.symbol}
+                        </Link>
+                      </td>
+                      <td className="text-slate-700 text-xs">
+                        <Link href={`/fundamentals/${stock.symbol}`} className="hover:underline">
+                          {stock.name}
+                        </Link>
+                      </td>
                       <td className="text-slate-600 text-xs">{stock.sector}</td>
                       <td className="text-right mono-num font-semibold text-slate-900">{stock.price.toFixed(2)}</td>
                       <td className="text-right mono-num text-slate-700">{stock.fairValue.toFixed(2)}</td>

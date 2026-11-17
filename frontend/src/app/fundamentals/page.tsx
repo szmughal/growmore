@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import MobileBottomNav from '@/components/MobileBottomNav';
-import { Layers, CheckCircle2 } from '@/components/Icons';
+import { Layers, CheckCircle2, ArrowUpRight } from '@/components/Icons';
 
 interface FundamentalCompany {
   symbol: string;
@@ -300,14 +301,21 @@ export default function FundamentalsPage() {
                     <th className="text-right">P/E</th>
                     <th className="text-right">Div Yield</th>
                     <th className="text-right">ROE</th>
+                    <th className="text-center">Cockpit</th>
                   </tr>
                 </thead>
                 <tbody>
                   {sortedCompanies.map((c) => (
-                    <tr key={c.symbol}>
+                    <tr key={c.symbol} className="hover:bg-slate-50/80 transition-colors">
                       <td>
-                        <span className="font-semibold text-slate-900">{c.symbol}</span>
-                        <span className="text-xs text-slate-500 block">{c.name}</span>
+                        <Link href={`/fundamentals/${c.symbol}`} className="block group">
+                          <span className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors mono-num">
+                            {c.symbol}
+                          </span>
+                          <span className="text-xs text-slate-500 block group-hover:text-slate-800">
+                            {c.name}
+                          </span>
+                        </Link>
                       </td>
                       <td>
                         <span className="text-xs text-slate-600">{c.sector}</span>
@@ -341,6 +349,15 @@ export default function FundamentalsPage() {
                       <td className="text-right mono-num text-slate-700">{c.pe.toFixed(1)}x</td>
                       <td className="text-right mono-num text-emerald-600 font-medium">{c.divYield.toFixed(1)}%</td>
                       <td className="text-right mono-num text-slate-900 font-medium">{c.roe.toFixed(1)}%</td>
+                      <td className="text-center">
+                        <Link
+                          href={`/fundamentals/${c.symbol}`}
+                          className="inline-flex items-center space-x-1 px-2.5 py-1 rounded bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 text-xs font-semibold transition-colors border border-slate-200 hover:border-emerald-200"
+                        >
+                          <span>Model</span>
+                          <ArrowUpRight className="w-3 h-3" />
+                        </Link>
+                      </td>
                     </tr>
                   ))}
                 </tbody>

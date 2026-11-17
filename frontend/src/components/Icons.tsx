@@ -60,6 +60,13 @@ export const ArrowRight = createIcon(
   </>
 );
 
+export const ArrowLeft = createIcon(
+  <>
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </>
+);
+
 export const Search = createIcon(
   <>
     <circle cx="11" cy="11" r="8" />
@@ -485,6 +492,7 @@ export const Icons = {
   ArrowUpRight,
   ArrowDownRight,
   ArrowRight,
+  ArrowLeft,
   Search,
   Globe,
   Clock,
