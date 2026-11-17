@@ -9,12 +9,13 @@ export default function MarketOverviewCards() {
   const data = indices[region] || indices.KSE100;
 
   const isPositive = data.change >= 0;
-  const flashClass =
-    data.lastDirection === 'up'
+  const flashClass = isMarketOpen
+    ? data.lastDirection === 'up'
       ? 'tick-flash-up'
       : data.lastDirection === 'down'
       ? 'tick-flash-down'
-      : '';
+      : ''
+    : '';
 
   const totalIssues = data.advances + data.declines + data.unchanged;
   const bullPct = Math.round((data.advances / totalIssues) * 100);
@@ -194,10 +195,12 @@ export default function MarketOverviewCards() {
       <div className="terminal-card p-4 flex flex-col justify-between">
         <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
           <div className="flex items-center space-x-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 live-beacon" />
-            <span className="font-semibold text-slate-700">Live Executed Trades</span>
+            <span className={`w-1.5 h-1.5 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
+            <span className="font-semibold text-slate-700">{isMarketOpen ? 'Live Executed Trades' : 'Official Closing Trades'}</span>
           </div>
-          <span className="text-[10px] text-emerald-700 font-semibold mono-num">Tick #{tickCount}</span>
+          <span className={`text-[10px] font-semibold mono-num ${isMarketOpen ? 'text-emerald-700' : 'text-slate-500'}`}>
+            {isMarketOpen ? `Tick #${tickCount}` : 'Session Closed'}
+          </span>
         </div>
 
         <div className="space-y-1.5 my-1 text-xs mono-num">
@@ -205,7 +208,7 @@ export default function MarketOverviewCards() {
             <div
               key={tr.id}
               className={`flex items-center justify-between px-1.5 py-0.5 rounded ${
-                i === 0 ? (tr.side === 'BUY' ? 'tick-flash-up' : 'tick-flash-down') : ''
+                i === 0 && isMarketOpen ? (tr.side === 'BUY' ? 'tick-flash-up' : 'tick-flash-down') : ''
               }`}
             >
               <div className="flex items-center space-x-1.5">

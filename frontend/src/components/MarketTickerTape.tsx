@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { useApp } from '@/context/ThemeContext';
-import { ArrowUpRight, ArrowDownRight } from '@/components/Icons';
+import { ArrowUpRight, ArrowDownRight, Refresh } from '@/components/Icons';
 
 export default function MarketTickerTape() {
-  const { stocks, indices, tickCount, isStreaming, toggleStreaming, isMarketOpen } = useApp();
+  const { stocks, indices, tickCount, isSyncing, syncLiveFeed, isMarketOpen } = useApp();
 
   const indexItems = [
     {
@@ -47,33 +47,36 @@ export default function MarketTickerTape() {
     <div className="w-full bg-white border-b border-slate-200 overflow-hidden select-none flex items-center h-9">
       {/* Left Pinned Live Stream Status Control */}
       <div className="flex items-center space-x-2 px-3 h-full bg-slate-50 border-r border-slate-200 z-10 shrink-0">
-        <span className={`w-2 h-2 rounded-full shrink-0 ${isMarketOpen && isStreaming ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
+        <span className={`w-2 h-2 rounded-full shrink-0 ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
         <span className="text-slate-800 font-bold text-[11px] uppercase tracking-wider">
-          {isMarketOpen ? 'PSX Live Tape' : 'PSX Official Close'}
+          {isMarketOpen ? 'PSX Live Stream' : 'PSX Official Close'}
         </span>
         <span className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-          {isMarketOpen ? `Tick #${tickCount}` : 'Market Closed'}
+          {isMarketOpen ? 'Live Stream' : 'Market Closed'}
         </span>
         <button
           type="button"
-          onClick={toggleStreaming}
-          title={isStreaming ? 'Pause stream' : 'Simulate live stream'}
-          className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-600 hover:text-slate-900"
+          onClick={() => syncLiveFeed()}
+          disabled={isSyncing}
+          title="Fetch verified rates directly from official PSX live stream"
+          className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 flex items-center space-x-1 transition-all disabled:opacity-50"
         >
-          {isStreaming ? 'Pause' : 'Simulate'}
+          <Refresh className={`w-2.5 h-2.5 ${isSyncing ? 'animate-spin text-emerald-600' : ''}`} />
+          <span>{isSyncing ? 'Syncing...' : 'Sync Feed'}</span>
         </button>
       </div>
 
-      {/* Continuous Scrolling Marquee with Live Flash Badges */}
+      {/* Continuous Scrolling Marquee */}
       <div className="flex-1 overflow-hidden relative h-full flex items-center">
-        <div className={isStreaming ? 'animate-marquee flex items-center space-x-6 px-4' : 'flex items-center space-x-6 px-4 overflow-x-auto'}>
+        <div className="animate-marquee flex items-center space-x-6 px-4">
           {marqueeList.map((item, idx) => {
-            const flashClass =
-              item.dir === 'up'
+            const flashClass = isMarketOpen
+              ? item.dir === 'up'
                 ? 'tick-flash-up'
                 : item.dir === 'down'
                 ? 'tick-flash-down'
-                : '';
+                : ''
+              : '';
 
             return (
               <div
