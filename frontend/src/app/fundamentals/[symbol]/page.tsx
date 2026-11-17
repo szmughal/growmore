@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import MobileBottomNav from '@/components/MobileBottomNav';
 import { getStockBySymbol, getSectorPeers, searchStocks, ALL_PSX_STOCKS, PSXStock } from '@/data/psxStocks';
+import { useApp } from '@/context/ThemeContext';
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -29,6 +30,7 @@ type TabType = 'overview' | 'valuation' | 'financials' | 'earnings' | 'health' |
 export default function StockDetailPage() {
   const params = useParams();
   const router = useRouter();
+  const { psxFeedDate, psxFeedTime, psxFeedDateTime, isMarketOpen } = useApp();
   const rawSymbol = (params?.symbol as string) || 'HBL';
   const symbol = rawSymbol.toUpperCase();
 
@@ -205,8 +207,10 @@ export default function StockDetailPage() {
             </div>
 
             <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-slate-400" />
-              <span className="text-slate-600 font-medium">Market Closed &bull; Data As Of Close</span>
+              <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
+              <span className="text-slate-600 font-medium">
+                {isMarketOpen ? `PSX Live • ${psxFeedTime} PKT` : `Market Closed • Close As Of ${psxFeedTime} PKT`}
+              </span>
             </div>
           </div>
 
@@ -247,11 +251,11 @@ export default function StockDetailPage() {
                   <span className="text-slate-500 font-medium">Pakistan Stock Exchange</span>
                   <span className="text-slate-300">&bull;</span>
                   <span className="inline-flex items-center text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-400 mr-1.5" />
-                    Market closed
+                    <span className={`w-1.5 h-1.5 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'} mr-1.5`} />
+                    {isMarketOpen ? 'Market Open' : 'Market Closed'}
                   </span>
                   <span className="text-slate-300">&bull;</span>
-                  <span className="text-slate-500">Data As Of 16 Nov 2026 Close</span>
+                  <span className="text-slate-500">Official PSX Session: {psxFeedDateTime}</span>
 
                   {stock.isShariah && (
                     <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">

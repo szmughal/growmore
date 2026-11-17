@@ -86,10 +86,10 @@ export function checkIsPSXMarketOpen(): boolean {
 }
 
 const INITIAL_STOCKS: LiveStock[] = [
-  { symbol: 'HBL', name: 'Habib Bank Limited', sector: 'Commercial Banks', price: 308.22, prevClose: 309.43, change: -1.21, changePercent: -0.39, volumeM: 1.58, valueM: 487, pe: 6.51, pb: 0.90, marketCap: '452.1B', fairValue: 459.93, gmScore: 91, qfScore: 'A+', checksPassed: 6, divYield: 7.46, roe: 14.42, bid: 308.10, ask: 308.34, lastDirection: 'down', lastTradeShares: 1200 },
-  { symbol: 'UBL', name: 'United Bank Limited', sector: 'Commercial Banks', price: 433.22, prevClose: 433.72, change: -0.50, changePercent: -0.12, volumeM: 0.90, valueM: 390, pe: 6.38, pb: 2.05, marketCap: '1.08T', fairValue: 495.00, gmScore: 94, qfScore: 'A+', checksPassed: 6, divYield: 7.39, roe: 29.91, bid: 433.00, ask: 433.50, lastDirection: 'down', lastTradeShares: 1500 },
-  { symbol: 'OGDC', name: 'Oil & Gas Dev Co', sector: 'Oil & Gas', price: 315.87, prevClose: 313.40, change: 2.47, changePercent: 0.79, volumeM: 12.50, valueM: 3948, pe: 5.80, pb: 0.92, marketCap: '1358.5B', fairValue: 420.00, gmScore: 88, qfScore: 'A+', checksPassed: 6, divYield: 8.20, roe: 22.40, bid: 315.75, ask: 315.99, lastDirection: 'up', lastTradeShares: 2500 },
-  { symbol: 'MEBL', name: 'Meezan Bank Ltd', sector: 'Islamic Banking', price: 284.50, prevClose: 280.90, change: 3.60, changePercent: 1.28, volumeM: 4.80, valueM: 1365, pe: 6.10, pb: 1.95, marketCap: '509.3B', fairValue: 360.00, gmScore: 95, qfScore: 'A+', checksPassed: 6, divYield: 9.80, roe: 38.60, bid: 284.35, ask: 284.65, lastDirection: 'up', lastTradeShares: 2200 },
+  { symbol: 'HBL', name: 'Habib Bank Limited', sector: 'Commercial Banks', price: 307.21, prevClose: 308.22, change: -1.01, changePercent: -0.33, volumeM: 1.58, valueM: 487, pe: 6.51, pb: 0.90, marketCap: '452.1B', fairValue: 459.93, gmScore: 91, qfScore: 'A+', checksPassed: 6, divYield: 7.46, roe: 14.42, bid: 307.10, ask: 307.30, lastDirection: 'down', lastTradeShares: 1200 },
+  { symbol: 'UBL', name: 'United Bank Limited', sector: 'Commercial Banks', price: 435.32, prevClose: 433.22, change: 2.10, changePercent: 0.49, volumeM: 0.90, valueM: 390, pe: 6.38, pb: 2.05, marketCap: '1.08T', fairValue: 495.00, gmScore: 94, qfScore: 'A+', checksPassed: 6, divYield: 7.39, roe: 29.91, bid: 435.00, ask: 435.50, lastDirection: 'up', lastTradeShares: 800 },
+  { symbol: 'OGDC', name: 'Oil & Gas Dev Co', sector: 'Oil & Gas', price: 314.04, prevClose: 315.87, change: -1.83, changePercent: -0.58, volumeM: 12.50, valueM: 3948, pe: 5.80, pb: 0.92, marketCap: '1358.5B', fairValue: 420.00, gmScore: 88, qfScore: 'A+', checksPassed: 6, divYield: 8.20, roe: 22.40, bid: 313.90, ask: 314.15, lastDirection: 'down', lastTradeShares: 2500 },
+  { symbol: 'MEBL', name: 'Meezan Bank Ltd', sector: 'Islamic Banking', price: 556.26, prevClose: 551.25, change: 5.01, changePercent: 0.91, volumeM: 4.80, valueM: 1365, pe: 6.10, pb: 1.95, marketCap: '509.3B', fairValue: 580.00, gmScore: 95, qfScore: 'A+', checksPassed: 6, divYield: 9.80, roe: 38.60, bid: 556.00, ask: 556.50, lastDirection: 'up', lastTradeShares: 1400 },
   { symbol: 'MCB', name: 'MCB Bank Limited', sector: 'Commercial Banks', price: 295.10, prevClose: 292.00, change: 3.10, changePercent: 1.06, volumeM: 2.60, valueM: 767, pe: 4.80, pb: 1.10, marketCap: '349.7B', fairValue: 390.00, gmScore: 92, qfScore: 'A+', checksPassed: 6, divYield: 10.50, roe: 31.20, bid: 294.95, ask: 295.25, lastDirection: 'up', lastTradeShares: 1800 },
   { symbol: 'MARI', name: 'Mari Petroleum Co', sector: 'Oil & Gas', price: 520.10, prevClose: 516.30, change: 3.80, changePercent: 0.74, volumeM: 2.90, valueM: 1508, pe: 7.40, pb: 2.10, marketCap: '698.4B', fairValue: 710.00, gmScore: 90, qfScore: 'A', checksPassed: 6, divYield: 6.50, roe: 25.40, bid: 519.80, ask: 520.40, lastDirection: 'up', lastTradeShares: 800 },
   { symbol: 'FFC', name: 'Fauji Fertilizer Co', sector: 'Fertilizer', price: 362.40, prevClose: 359.50, change: 2.90, changePercent: 0.81, volumeM: 6.50, valueM: 2355, pe: 6.80, pb: 1.85, marketCap: '460.8B', fairValue: 440.00, gmScore: 89, qfScore: 'A', checksPassed: 5, divYield: 11.80, roe: 29.40, bid: 362.20, ask: 362.60, lastDirection: 'up', lastTradeShares: 1500 },
@@ -108,10 +108,10 @@ const INITIAL_INDICES: Record<MarketRegion, LiveIndexData> = {
     id: 'KSE100',
     title: 'KSE 100 Index',
     badge: 'PSX Benchmark',
-    value: 178182.95,
-    prevClose: 177873.88,
-    change: 309.07,
-    changePercent: 0.17,
+    value: 177517.74,
+    prevClose: 178182.95,
+    change: -665.21,
+    changePercent: -0.37,
     volumeM: 224.15,
     valueB: 22.31,
     high52w: '179,693',
@@ -119,28 +119,28 @@ const INITIAL_INDICES: Record<MarketRegion, LiveIndexData> = {
     advances: 214,
     declines: 128,
     unchanged: 46,
-    lastDirection: 'up',
+    lastDirection: 'down',
     intradayPoints: [
-      { time: '09:30', price: 177874, vol: 18 },
-      { time: '10:00', price: 178120, vol: 32 },
-      { time: '10:30', price: 178050, vol: 24 },
-      { time: '11:00', price: 178490, vol: 45 },
-      { time: '11:30', price: 178350, vol: 29 },
-      { time: '12:00', price: 178710, vol: 52 },
-      { time: '12:30', price: 178580, vol: 34 },
-      { time: '13:00', price: 178950, vol: 61 },
-      { time: '13:30', price: 178820, vol: 40 },
-      { time: 'Close', price: 178183, vol: 48 },
+      { time: '09:30', price: 178183, vol: 18 },
+      { time: '10:00', price: 178050, vol: 32 },
+      { time: '10:30', price: 177920, vol: 24 },
+      { time: '11:00', price: 177750, vol: 45 },
+      { time: '11:30', price: 177680, vol: 29 },
+      { time: '12:00', price: 177810, vol: 52 },
+      { time: '12:30', price: 177650, vol: 34 },
+      { time: '13:00', price: 177580, vol: 61 },
+      { time: '13:30', price: 177490, vol: 40 },
+      { time: 'Close', price: 177518, vol: 48 },
     ],
   },
   KMI30: {
     id: 'KMI30',
     title: 'KMI 30 Shariah Index',
     badge: 'PSX Islamic Benchmark',
-    value: 255677.35,
-    prevClose: 255042.46,
-    change: 634.88,
-    changePercent: 0.25,
+    value: 254385.85,
+    prevClose: 255677.35,
+    change: -1291.50,
+    changePercent: -0.51,
     volumeM: 95.34,
     valueB: 17.77,
     high52w: '258,429',
@@ -148,28 +148,28 @@ const INITIAL_INDICES: Record<MarketRegion, LiveIndexData> = {
     advances: 20,
     declines: 8,
     unchanged: 2,
-    lastDirection: 'up',
+    lastDirection: 'down',
     intradayPoints: [
-      { time: '09:30', price: 255042, vol: 14 },
+      { time: '09:30', price: 255677, vol: 14 },
       { time: '10:00', price: 255380, vol: 26 },
       { time: '10:30', price: 255210, vol: 20 },
-      { time: '11:00', price: 255920, vol: 38 },
-      { time: '11:30', price: 255780, vol: 24 },
-      { time: '12:00', price: 256250, vol: 42 },
-      { time: '12:30', price: 256140, vol: 31 },
-      { time: '13:00', price: 256690, vol: 50 },
-      { time: '13:30', price: 256420, vol: 35 },
-      { time: 'Close', price: 255677, vol: 44 },
+      { time: '11:00', price: 254920, vol: 38 },
+      { time: '11:30', price: 254780, vol: 24 },
+      { time: '12:00', price: 254850, vol: 42 },
+      { time: '12:30', price: 254640, vol: 31 },
+      { time: '13:00', price: 254510, vol: 50 },
+      { time: '13:30', price: 254420, vol: 35 },
+      { time: 'Close', price: 254386, vol: 44 },
     ],
   },
   KSE30: {
     id: 'KSE30',
     title: 'KSE 30 Free-Float Index',
     badge: 'PSX Free-Float Blue-Chip',
-    value: 51963.22,
-    prevClose: 51887.21,
-    change: 76.01,
-    changePercent: 0.15,
+    value: 51753.06,
+    prevClose: 51963.22,
+    change: -210.16,
+    changePercent: -0.40,
     volumeM: 95.09,
     valueB: 18.37,
     high52w: '52,461',
@@ -177,28 +177,28 @@ const INITIAL_INDICES: Record<MarketRegion, LiveIndexData> = {
     advances: 18,
     declines: 10,
     unchanged: 2,
-    lastDirection: 'up',
+    lastDirection: 'down',
     intradayPoints: [
-      { time: '09:30', price: 51887, vol: 12 },
-      { time: '10:00', price: 51990, vol: 22 },
-      { time: '10:30', price: 51940, vol: 18 },
-      { time: '11:00', price: 52080, vol: 34 },
-      { time: '11:30', price: 52050, vol: 21 },
-      { time: '12:00', price: 52140, vol: 39 },
-      { time: '12:30', price: 52110, vol: 28 },
-      { time: '13:00', price: 52220, vol: 45 },
-      { time: '13:30', price: 52190, vol: 31 },
-      { time: 'Close', price: 51963, vol: 41 },
+      { time: '09:30', price: 51963, vol: 12 },
+      { time: '10:00', price: 51910, vol: 22 },
+      { time: '10:30', price: 51840, vol: 18 },
+      { time: '11:00', price: 51790, vol: 34 },
+      { time: '11:30', price: 51750, vol: 21 },
+      { time: '12:00', price: 51780, vol: 39 },
+      { time: '12:30', price: 51760, vol: 28 },
+      { time: '13:00', price: 51740, vol: 45 },
+      { time: '13:30', price: 51730, vol: 31 },
+      { time: 'Close', price: 51753, vol: 41 },
     ],
   },
 };
 
 const INITIAL_TRADES: ExecutedTrade[] = [
-  { id: 't-1', time: '14:30:00', symbol: 'HBL', price: 308.22, shares: 1200, side: 'BUY' },
-  { id: 't-2', time: '14:29:45', symbol: 'OGDC', price: 315.87, shares: 2500, side: 'BUY' },
-  { id: 't-3', time: '14:29:30', symbol: 'UBL', price: 433.22, shares: 800, side: 'BUY' },
-  { id: 't-4', time: '14:29:15', symbol: 'MEBL', price: 284.50, shares: 1400, side: 'BUY' },
-  { id: 't-5', time: '14:28:50', symbol: 'SYS', price: 485.50, shares: 600, side: 'SELL' },
+  { id: 't-1', time: '15:46:20', symbol: 'HBL', price: 307.21, shares: 1200, side: 'SELL' },
+  { id: 't-2', time: '15:49:18', symbol: 'OGDC', price: 314.04, shares: 2500, side: 'SELL' },
+  { id: 't-3', time: '15:47:45', symbol: 'UBL', price: 435.32, shares: 800, side: 'BUY' },
+  { id: 't-4', time: '15:45:10', symbol: 'MEBL', price: 556.26, shares: 1400, side: 'BUY' },
+  { id: 't-5', time: '15:44:30', symbol: 'SYS', price: 485.50, shares: 600, side: 'SELL' },
 ];
 
 interface AppContextType {
@@ -216,6 +216,9 @@ interface AppContextType {
   toggleStreaming: () => void;
   tickCount: number;
   lastTickTime: string;
+  psxFeedTime: string;
+  psxFeedDate: string;
+  psxFeedDateTime: string;
   stocks: LiveStock[];
   indices: Record<MarketRegion, LiveIndexData>;
   liveTrades: ExecutedTrade[];
@@ -237,6 +240,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
   const [tickCount, setTickCount] = useState<number>(1);
   const [lastTickTime, setLastTickTime] = useState<string>('Market Closed');
+  const [psxFeedTime, setPsxFeedTime] = useState<string>('15:50:00');
+  const [psxFeedDate, setPsxFeedDate] = useState<string>('17 Nov 2026');
+  const [psxFeedDateTime, setPsxFeedDateTime] = useState<string>('17 Nov 2026 • 15:50:00 PKT');
   const [stocks, setStocks] = useState<LiveStock[]>(INITIAL_STOCKS);
   const [indices, setIndices] = useState<Record<MarketRegion, LiveIndexData>>(INITIAL_INDICES);
   const [liveTrades, setLiveTrades] = useState<ExecutedTrade[]>(INITIAL_TRADES);
@@ -255,6 +261,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         const exchangeClosed = data?.meta?.marketClosed !== undefined ? Boolean(data.meta.marketClosed) : !checkIsPSXMarketOpen();
         setIsMarketOpen(!exchangeClosed);
         setIsStreaming(!exchangeClosed);
+
+        // Extract timing directly from official PSX feed
+        if (data?.meta) {
+          if (data.meta.psxTime) setPsxFeedTime(data.meta.psxTime);
+          if (data.meta.psxDate) setPsxFeedDate(data.meta.psxDate);
+          if (data.meta.psxDateTime) {
+            setPsxFeedDateTime(data.meta.psxDateTime);
+            setLastTickTime(data.meta.psxDateTime);
+          }
+        }
 
         // Update benchmark indices with authentic numbers
         if (Array.isArray(data.indices) && data.indices.length > 0) {
@@ -341,10 +357,45 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
               };
             });
           });
+
+          // Sync official executed trade prices and timings dynamically
+          const sampleSymbols = ['HBL', 'OGDC', 'UBL', 'MEBL', 'SYS'];
+          const syncedTrades: ExecutedTrade[] = [];
+          sampleSymbols.forEach((sym, idx) => {
+            const st = stockMap.get(sym);
+            if (st) {
+              let tTime = '15:50:00';
+              const rawT = st.lastUpdated || st.quoteObservedAt || st.date;
+              if (rawT) {
+                try {
+                  const td = new Date(rawT);
+                  tTime = td.toLocaleTimeString('en-US', {
+                    timeZone: 'Asia/Karachi',
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                  });
+                } catch (e) {}
+              }
+              const p = Number(st.current || st.close || st.ldcp || 0);
+              const chg = Number(st.change || 0);
+              syncedTrades.push({
+                id: `tr-synced-${sym}-${Date.now()}`,
+                time: tTime,
+                symbol: sym,
+                price: Number(p.toFixed(2)),
+                shares: (idx + 1) * 600 + 400,
+                side: chg >= 0 ? 'BUY' : 'SELL',
+              });
+            }
+          });
+          if (syncedTrades.length > 0) {
+            setLiveTrades(syncedTrades);
+          }
         }
 
         setTickCount((prev) => prev + 1);
-        setLastTickTime(exchangeClosed ? 'Market Closed • Final Close' : 'Live Stream Synced');
       }
     } catch (e) {
       console.warn('Live feed synchronization error:', e);
@@ -361,9 +412,6 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const open = checkIsPSXMarketOpen();
     setIsMarketOpen(open);
     setIsStreaming(open);
-    if (!open) {
-      setLastTickTime('Market Closed • Final Close');
-    }
 
     // Initial sync with official live feed
     syncLiveFeed();
@@ -423,6 +471,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         toggleStreaming,
         tickCount,
         lastTickTime,
+        psxFeedTime,
+        psxFeedDate,
+        psxFeedDateTime,
         stocks,
         indices,
         liveTrades,

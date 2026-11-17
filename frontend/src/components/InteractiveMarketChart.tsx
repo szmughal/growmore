@@ -124,7 +124,7 @@ const rangeSeriesMap: Record<TimeRangeKey, {
 };
 
 export default function InteractiveMarketChart() {
-  const { region, indices, lastTickTime } = useApp();
+  const { region, indices, lastTickTime, isMarketOpen, psxFeedTime, psxFeedDateTime } = useApp();
   const [activeRange, setActiveRange] = useState<TimeRangeKey>('1D');
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
@@ -159,6 +159,7 @@ export default function InteractiveMarketChart() {
   const pathD = coords.reduce((acc, c, i) => `${acc} ${i === 0 ? 'M' : 'L'} ${c.x} ${c.y}`, '');
   const activePoint = hoverIndex !== null && coords[hoverIndex] ? coords[hoverIndex] : coords[coords.length - 1];
   const pctReturn = (((activePoint.pt.price - basePrice) / basePrice) * 100).toFixed(2);
+  const isPosReturn = Number(pctReturn) >= 0;
   const lastCoord = coords[coords.length - 1];
 
   return (
@@ -167,16 +168,18 @@ export default function InteractiveMarketChart() {
       <div className="flex flex-wrap items-center justify-between pb-3 mb-3 border-b border-slate-100 gap-2">
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 live-beacon" />
+            <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
             <span className="text-sm font-semibold text-slate-900">
               {region === 'KSE100' ? 'KSE 100' : region === 'KMI30' ? 'KMI 30' : 'KSE 30'} Index Trajectory ({activeRange})
             </span>
           </div>
           <div className="flex items-center space-x-2 text-xs mono-num">
-            <span className="text-slate-500">At {activePoint.pt.time}:</span>
+            <span className="text-slate-500">
+              {isMarketOpen ? `At ${activePoint.pt.time}:` : `At Close (${psxFeedTime} PKT):`}
+            </span>
             <span className="text-slate-900 font-bold">{activePoint.pt.price.toLocaleString()}</span>
-            <span className="text-emerald-600 font-semibold">
-              +{pctReturn}%
+            <span className={isPosReturn ? "text-emerald-600 font-semibold" : "text-rose-600 font-semibold"}>
+              {isPosReturn ? '+' : ''}{pctReturn}%
             </span>
           </div>
         </div>

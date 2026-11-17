@@ -7,7 +7,7 @@ import { ALL_PSX_STOCKS } from '@/data/psxStocks';
 import { ArrowUpRight, ArrowDownRight, ExternalLink, Search } from '@/components/Icons';
 
 export default function MarketDataTable() {
-  const { stocks, tickCount, lastTickTime, isMarketOpen } = useApp();
+  const { stocks, tickCount, lastTickTime, isMarketOpen, psxFeedTime, psxFeedDateTime } = useApp();
   const [activeTab, setActiveTab] = useState<'active' | 'gainers' | 'losers' | 'all'>('active');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [pageSize, setPageSize] = useState<number>(15);
@@ -105,7 +105,7 @@ export default function MarketDataTable() {
           <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
           <span className="text-sm font-semibold text-slate-900">Market Tape &amp; Leaders</span>
           <span className={`text-xs font-semibold mono-num px-2 py-0.5 rounded border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-            {isMarketOpen ? `Streaming Tick #${tickCount} (${lastTickTime})` : 'Market Closed • Final Close'}
+            {isMarketOpen ? `PSX Streaming • ${psxFeedTime} PKT` : `Official PSX Close • ${psxFeedDateTime}`}
           </span>
         </div>
 

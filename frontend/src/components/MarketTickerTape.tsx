@@ -5,7 +5,7 @@ import { useApp } from '@/context/ThemeContext';
 import { ArrowUpRight, ArrowDownRight, Refresh } from '@/components/Icons';
 
 export default function MarketTickerTape() {
-  const { stocks, indices, tickCount, isSyncing, syncLiveFeed, isMarketOpen } = useApp();
+  const { stocks, indices, tickCount, isSyncing, syncLiveFeed, isMarketOpen, psxFeedTime, psxFeedDateTime } = useApp();
 
   const indexItems = [
     {
@@ -51,8 +51,11 @@ export default function MarketTickerTape() {
         <span className="text-slate-800 font-bold text-[11px] uppercase tracking-wider">
           {isMarketOpen ? 'PSX Live Stream' : 'PSX Official Close'}
         </span>
-        <span className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
-          {isMarketOpen ? 'Live Stream' : 'Market Closed'}
+        <span 
+          title={`PSX Official Exchange Timestamp: ${psxFeedDateTime}`}
+          className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}
+        >
+          {isMarketOpen ? `PSX: ${psxFeedTime} PKT` : `Close: ${psxFeedTime} PKT`}
         </span>
         <button
           type="button"

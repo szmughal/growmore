@@ -29,7 +29,7 @@ export default function Header({
   onMarketChange 
 }: HeaderProps) {
   const router = useRouter();
-  const { region, setRegion, isMobileMenuOpen, setIsMobileMenuOpen, isMarketOpen } = useApp();
+  const { region, setRegion, isMobileMenuOpen, setIsMobileMenuOpen, isMarketOpen, psxFeedTime, psxFeedDateTime } = useApp();
   const [currentTime, setCurrentTime] = useState<string>('');
   const [isCommandOpen, setIsCommandOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -155,7 +155,7 @@ export default function Header({
               </button>
             </div>
 
-            {/* Market Status & Clock */}
+            {/* Market Status & Clock with Authentic PSX Exchange Timing */}
             <div className="hidden xl:flex items-center space-x-2 pl-3 border-l border-slate-200 text-xs text-slate-600">
               <span className={`w-2 h-2 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
               <span className="text-[#0F172A] font-semibold">
@@ -166,9 +166,11 @@ export default function Header({
                 {isMarketOpen ? 'Live' : 'Market Closed'}
               </span>
               <span className="text-slate-300">•</span>
-              <span className="mono-num text-slate-700 font-medium">{currentTime || '16:00:00'}</span>
-              <span className="text-slate-500 text-[10px] font-semibold">
-                PKT
+              <span 
+                className="mono-num text-slate-700 font-medium" 
+                title={`Official Pakistan Stock Exchange Data Timestamp: ${psxFeedDateTime}`}
+              >
+                {isMarketOpen ? `${psxFeedTime} PKT` : `Close: ${psxFeedTime} PKT`}
               </span>
             </div>
           </div>

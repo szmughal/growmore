@@ -5,7 +5,7 @@ import { useApp } from '@/context/ThemeContext';
 import { ArrowUpRight, ArrowDownRight } from '@/components/Icons';
 
 export default function MarketOverviewCards() {
-  const { region, indices, stocks, liveTrades, tickCount, lastTickTime, isMarketOpen } = useApp();
+  const { region, indices, stocks, liveTrades, tickCount, lastTickTime, isMarketOpen, psxFeedTime, psxFeedDateTime } = useApp();
   const data = indices[region] || indices.KSE100;
 
   const isPositive = data.change >= 0;
@@ -57,9 +57,12 @@ export default function MarketOverviewCards() {
         <div>
           <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
             <span className="font-semibold text-slate-700">{data.title}</span>
-            <span className={`inline-flex items-center space-x-1 text-[10px] mono-num font-semibold px-1.5 py-0.5 rounded border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
+            <span 
+              title={`Official PSX Timestamp: ${psxFeedDateTime}`}
+              className={`inline-flex items-center space-x-1 text-[10px] mono-num font-semibold px-1.5 py-0.5 rounded border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}
+            >
               <span className={`w-1.5 h-1.5 rounded-full ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
-              <span>{isMarketOpen ? `LIVE • ${lastTickTime}` : 'Market Closed • Close'}</span>
+              <span>{isMarketOpen ? `LIVE • ${psxFeedTime} PKT` : `Close • ${psxFeedTime} PKT`}</span>
             </span>
           </div>
           <div className="flex items-baseline space-x-2 mt-1">
