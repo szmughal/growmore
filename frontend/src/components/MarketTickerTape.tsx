@@ -44,33 +44,38 @@ export default function MarketTickerTape() {
   const marqueeList = [...allItems, ...allItems];
 
   return (
-    <div className="w-full bg-white border-b border-slate-200 overflow-hidden select-none flex items-center h-9">
-      {/* Left Pinned Live Stream Status Control */}
-      <div className="flex items-center space-x-2 px-3 h-full bg-slate-50 border-r border-slate-200 z-10 shrink-0">
-        <span className={`w-2 h-2 rounded-full shrink-0 ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
-        <span className="text-slate-800 font-bold text-[11px] uppercase tracking-wider">
-          {isMarketOpen ? 'PSX Live Stream' : 'PSX Official Close'}
-        </span>
-        <span 
-          title={`PSX Official Exchange Timestamp: ${psxFeedDateTime}`}
-          className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}
-        >
-          {isMarketOpen ? `PSX: ${psxFeedTime} PKT` : `Close: ${psxFeedTime} PKT`}
-        </span>
-        <button
-          type="button"
-          onClick={() => syncLiveFeed()}
-          disabled={isSyncing}
-          title="Fetch verified rates directly from official PSX live stream"
-          className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 flex items-center space-x-1 transition-all disabled:opacity-50"
-        >
-          <Refresh className={`w-2.5 h-2.5 ${isSyncing ? 'animate-spin text-emerald-600' : ''}`} />
-          <span>{isSyncing ? 'Syncing...' : 'Sync Feed'}</span>
-        </button>
+    <div className="w-full bg-white border-b border-slate-200 select-none flex flex-col md:flex-row md:items-center">
+      {/* 1. Status & Sync Feed Bar: Full-width on mobile; pinned on left on desktop */}
+      <div className="flex items-center justify-between md:justify-start space-x-2 px-3 py-1.5 md:py-0 md:h-9 bg-slate-50 border-b md:border-b-0 md:border-r border-slate-200 z-10 shrink-0">
+        <div className="flex items-center space-x-2 shrink-0">
+          <span className={`w-2 h-2 rounded-full shrink-0 ${isMarketOpen ? 'bg-emerald-600 live-beacon' : 'bg-slate-400'}`} />
+          <span className="text-slate-800 font-bold text-[11px] uppercase tracking-wider">
+            {isMarketOpen ? 'PSX Live Stream' : 'PSX Official Close'}
+          </span>
+        </div>
+
+        <div className="flex items-center space-x-2 shrink-0">
+          <span 
+            title={`PSX Official Exchange Timestamp: ${psxFeedDateTime}`}
+            className={`text-[10px] mono-num px-1.5 py-0.5 rounded font-semibold border ${isMarketOpen ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-100 text-slate-600 border-slate-200'}`}
+          >
+            {isMarketOpen ? `PSX: ${psxFeedTime} PKT` : `Close: ${psxFeedTime} PKT`}
+          </span>
+          <button
+            type="button"
+            onClick={() => syncLiveFeed()}
+            disabled={isSyncing}
+            title="Fetch verified rates directly from official PSX live stream"
+            className="text-[10px] font-semibold px-2 py-0.5 rounded bg-white border border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-50 flex items-center space-x-1 transition-all disabled:opacity-50"
+          >
+            <Refresh className={`w-2.5 h-2.5 ${isSyncing ? 'animate-spin text-emerald-600' : ''}`} />
+            <span>{isSyncing ? 'Syncing...' : 'Sync Feed'}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Continuous Scrolling Marquee */}
-      <div className="flex-1 overflow-hidden relative h-full flex items-center">
+      {/* 2. Continuous Scrolling Marquee (Slider of Shares): Full width on next line on mobile! */}
+      <div className="w-full flex-1 overflow-hidden relative h-8 md:h-9 flex items-center bg-white">
         <div className="animate-marquee flex items-center space-x-6 px-4">
           {marqueeList.map((item, idx) => {
             const flashClass = isMarketOpen
